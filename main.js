@@ -1,7 +1,7 @@
 // movies following the form of a JSON Object
 const movies = [
   {
-    movie: '/images/avatar_way_of_water.jpg',
+    movie: './images/avatar_way_of_water.jpg',
     movieName: 'Avatar: The Way of Water',
     movieYear: 2022,
     movieDesc: ``,
@@ -15,7 +15,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=d9MyW72ELq0',
   },
   {
-    movie: '/images/mist.jpg',
+    movie: './images/mist.jpg',
     movieName: 'The Mist',
     movieRating: 'R',
     movieYear: 2007,
@@ -30,7 +30,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=LhCKXJNGzN8',
   },
   {
-    movie: '/images/parasite.jpg',
+    movie: './images/parasite.jpg',
     movieName: 'Parasite',
     movieRating: 'R',
     movieYear: 2019,
@@ -42,7 +42,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=5xH0HfJHsaY',
   },
   {
-    movie: '/images/the_godfather.jpg',
+    movie: './images/the_godfather.jpg',
     movieName: 'The Godfather',
     movieRating: 'R',
     movieYear: 1972,
@@ -57,7 +57,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=UaVTIH8mujA',
   },
   {
-    movie: '/images/the_hunger_games.jpg',
+    movie: './images/the_hunger_games.jpg',
     movieName: 'The Hunger Games',
     movieRating: 'PG-13',
     movieYear: 2012,
@@ -72,7 +72,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=PbA63a7H0bo',
   },
   {
-    movie: '/images/star_wars_ep_3.jpg',
+    movie: './images/star_wars_ep_3.jpg',
     movieName: 'Star Wars: Episode III - Revenge of the Sith',
     movieRating: 'PG-13',
     movieYear: 2005,
@@ -171,8 +171,10 @@ const module = {
       const element = movie.movieName.replaceAll(' ', '-').replaceAll(':', '');
       return element;
     })];
-    for (let i =0; i < tempArray.length - 1; i++) {
-
+    for (let i = 0; i < tempArray.length - 1; i++) {
+      if (currentPath === tempArray[i]) {
+        module.renderSpecificItem(tempArray[i], `${temp}`);
+      }
     }
   },
 };
