@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+#root {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    height: 100%;
+    width: 100%;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid red;
+    padding: 1em;
+    border-radius: 12px;
+    color: white;
+    background-color: rgb(26, 26, 26)
+}
+
+.thumbs {
+    width: 25px;
+    height: 25px;
+}
+.moviesData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+.moviesList {
+    display: grid;
+    grid-template-columns: .1fr .1fr .1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+.movies {
+    width: 200px;
+    height: 200px;
+}
