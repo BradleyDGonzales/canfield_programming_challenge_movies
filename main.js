@@ -41,7 +41,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=5xH0HfJHsaY',
   },
   {
-    movie: 'images/the_godfather.JPG',
+    movie: 'images/the_godfather.jpg',
     movieName: 'The Godfather',
     movieRating: 'R',
     movieYear: 1972,
@@ -116,11 +116,11 @@ function initRender() {
     card.appendChild(movieName);
     card.appendChild(movieData);
     const thumbUp = new Image();
-    thumbUp.src = '/images/thumb-up-outline.svg';
+    thumbUp.src = 'images/thumb-up-outline.svg';
     thumbUp.classList.add('thumbUp');
     thumbUp.setAttribute('data-movie', `${data.movieName} Likes`);
     const thumbDown = new Image();
-    thumbDown.src = '/images/thumb-down-outline.svg';
+    thumbDown.src = 'images/thumb-down-outline.svg';
     thumbDown.classList.add('thumbDown');
     thumbDown.setAttribute('data-movie', `${data.movieName} Dislikes`);
     const thumbDownCount = document.createElement('p');
