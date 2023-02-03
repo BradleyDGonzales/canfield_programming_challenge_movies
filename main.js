@@ -41,7 +41,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=5xH0HfJHsaY',
   },
   {
-    movie: 'Images/the_godfather.JPG',
+    movie: 'images/the_godfather.jpg',
     movieName: 'The Godfather',
     movieRating: 'R',
     movieYear: 1972,
