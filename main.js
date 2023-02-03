@@ -57,7 +57,7 @@ const movies = [
     movieTrailer: 'https://www.youtube.com/watch?v=UaVTIH8mujA',
   },
   {
-    movie: './images/the_hunger_games.JPG',
+    movie: 'file:///home/bradley/repos/canfield_programming_challenge_movies/images/the_hunger_games.jpg',
     movieName: 'The Hunger Games',
     movieRating: 'PG-13',
     movieYear: 2012,
