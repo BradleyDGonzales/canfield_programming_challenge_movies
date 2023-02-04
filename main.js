@@ -3,6 +3,7 @@ const movies = [
   {
     movie: 'images/avatar_way_of_water.jpg',
     movieName: 'Avatar: The Way of Water',
+    movieRating: 'PG-13',
     movieYear: 2022,
     movieDesc: `Jake Sully and Ney'tiri have formed a family and are doing everything to stay together. 
                 However, they must leave their home and explore the regions of Pandora. 
@@ -11,7 +12,7 @@ const movies = [
     movieDuration: '3h 12m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=d9MyW72ELq0',
+    movieTrailer: 'https://www.youtube.com/embed/d9MyW72ELq0',
   },
   {
     movie: 'images/mist.jpg',
@@ -26,7 +27,7 @@ const movies = [
     movieDuration: '2h 5m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=LhCKXJNGzN8',
+    movieTrailer: 'https://www.youtube.com/embed/LhCKXJNGzN8',
   },
   {
     movie: 'images/parasite.jpg',
@@ -38,7 +39,7 @@ const movies = [
     movieDuration: '2h 12m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=5xH0HfJHsaY',
+    movieTrailer: 'https://www.youtube.com/embed/5xH0HfJHsaY',
   },
   {
     movie: 'images/the_godfather.jpg',
@@ -53,7 +54,7 @@ const movies = [
     movieDuration: '2h 57m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=UaVTIH8mujA',
+    movieTrailer: 'https://www.youtube.com/embed/UaVTIH8mujA',
   },
   {
     movie: 'images/the_hunger_games.jpg',
@@ -68,30 +69,50 @@ const movies = [
     movieDuration: '2h 22m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=PbA63a7H0bo',
+    movieTrailer: 'https://www.youtube.com/embed/PbA63a7H0bo',
   },
   {
-    movie: 'images/star_wars_ep_3.jpg',
-    movieName: 'Star Wars: Episode III - Revenge of the Sith',
-    movieRating: 'PG-13',
-    movieYear: 2005,
-    movieDesc: `It has been three years since the Clone Wars began. Jedi Master Obi-Wan Kenobi (Ewan McGregor) and Jedi Knight Anakin Skywalker (Hayden Christensen) 
-                rescue Chancellor Palpatine (Ian McDiarmid) from General Grievous, the commander of the droid armies, but Grievous escapes. Suspicions are raised 
-                within the Jedi Council concerning Chancellor Palpatine, with whom Anakin has formed a bond. Asked to spy on the chancellor, and full of bitterness 
-                toward the Jedi Council, Anakin embraces the Dark Side.`,
-    movieGenre: 'Action/Sci-fi',
-    movieDuration: '2h 20m',
+    movie: 'images/sleepless_in_seattle.jpg',
+    movieName: 'Sleepless in Seattle',
+    movieRating: 'PG',
+    movieYear: 1993,
+    movieDesc: `After the death of his wife, Sam Baldwin (Tom Hanks) moves to Seattle with his son, Jonah (Ross Mallinger). 
+                When Jonah calls in to a talk-radio program to find a new wife for his father, Sam grudgingly gets on the line to discuss his feelings. 
+                Annie Reed (Meg Ryan), a reporter in Baltimore, hears Sam speak and falls for him, even though she is engaged. Unsure where it will lead, 
+                she writes Sam a letter asking him to meet her at the Empire State Building on Valentine's Day.`,
+    movieGenre: 'Romance/Comedy',
+    movieDuration: '1h 45m',
     movieThumbsDown: 0,
     movieThumbsUp: 0,
-    movieTrailer: 'https://www.youtube.com/watch?v=5UnjrG_N8hU',
+    movieTrailer: 'https://www.youtube.com/embed/ahI9LaOGYcE',
   },
 ];
+
 // append root to body
 const root = document.createElement('div');
-root.textContent = 'TEST?';
 root.setAttribute('id', 'root');
-console.log('oh yeah baby');
 document.body.appendChild(root);
+
+
+// create the navbar for UX purposes and append to root
+const navbar = document.createElement('nav');
+navbar.setAttribute('id', 'navBar');
+
+const logo = new Image();
+logo.setAttribute('id', 'logo');
+logo.src = 'images/icon.png';
+
+const websiteTitle = document.createElement('h2');
+websiteTitle.setAttribute('id', 'movieTitle');
+websiteTitle.textContent = 'Movie Critics';
+
+root.appendChild(navbar);
+
+// append logo and title to navbar
+
+navbar.appendChild(logo);
+navbar.appendChild(websiteTitle);
+
 
 // create moviesList div for the small set of movies
 const moviesList = document.createElement('div');
@@ -133,11 +154,23 @@ function initRender() {
     movieData.appendChild(thumbUpCount);
   });
 }
+initRender();
 
-window.onload = initRender();
+function routeChange() {
+  const hash = window.location.hash;
+  if (hash === '') {
+    document.querySelector('.movieInfoContainer').remove();
+    const routerView = document.getElementById('root');
+    routerView.appendChild(moviesList);
+  }
+}
+window.addEventListener('hashchange', routeChange);
+window.onload = () => {
+  module.renderOnPageLoadOrURLChange();
+};
 document.querySelectorAll('.movies').forEach((movie) => {
   movie.addEventListener('click', function(e) {
-    location.href = location.origin + location.pathname + '#' + e.target.alt.replaceAll(' ', '-').replaceAll(':', '');
+    location.href = location.origin + location.pathname + '#' + e.target.alt.replaceAll(' ', '-');
   });
 });
 
@@ -158,21 +191,93 @@ document.querySelectorAll('.thumbDown').forEach((thumb) => {
 });
 
 const module = {
-  renderSpecificItem: (items, renderID) => {
-    const div = document.createElement('div');
-    div.textContent = 'just got added';
-    root.appendChild(div);
+  renderSpecificItem: (item) => {
+    const moviesList = document.querySelector('.moviesList');
+    moviesList.remove();
+
+
+    const movieInfoContainer = document.createElement('div');
+    movieInfoContainer.classList.add('movieInfoContainer');
+
+    root.appendChild(movieInfoContainer);
+
+    const movieInfo = document.createElement('div');
+    movieInfo.classList.add('movieInfo');
+
+    movieInfoContainer.appendChild(movieInfo);
+
+    const movieTitle = document.createElement('h2');
+    movieTitle.setAttribute('id', 'movieTitle');
+    movieTitle.textContent = item[0].movieName;
+    movieInfo.appendChild(movieTitle);
+
+    const movieDetails = document.createElement('ul');
+    movieDetails.classList.add('movieDetails');
+    movieInfo.appendChild(movieDetails);
+
+    const movieYear = document.createElement('li');
+    movieYear.textContent = item[0].movieYear;
+    movieDetails.appendChild(movieYear);
+
+    const movieRating = document.createElement('li');
+    movieRating.textContent = item[0].movieRating;
+    movieDetails.appendChild(movieRating);
+
+    const movieDuration = document.createElement('li');
+    movieDuration.textContent = item[0].movieDuration;
+    movieDetails.appendChild(movieDuration);
+
+    const movieLikes = document.createElement('li');
+    movieLikes.textContent = `${item[0].movieThumbsUp} others like this movie`;
+    movieDetails.appendChild(movieLikes);
+
+    const movieDislikes = document.createElement('li');
+    movieDislikes.textContent = `${item[0].movieThumbsDown} others dislike this movie`;
+    movieDetails.appendChild(movieDislikes);
+
+    const movieAdditional = document.createElement('div');
+    movieAdditional.classList.add('movieAdditional');
+    movieInfo.appendChild(movieAdditional);
+
+    const movieImg = new Image();
+    movieImg.src = item[0].movie;
+    movieImg.classList.add('renderedMovieImage');
+    movieAdditional.appendChild(movieImg);
+
+    const movieSummary = document.createElement('div');
+    movieSummary.classList.add('movieSummary');
+
+    movieAdditional.appendChild(movieSummary);
+
+    const movieGenre = document.createElement('h2');
+    movieGenre.textContent = item[0].movieGenre;
+
+    movieSummary.appendChild(movieGenre);
+
+    const movieDesc = document.createElement('p');
+    movieDesc.textContent = item[0].movieDesc;
+
+    movieSummary.appendChild(movieDesc);
+    const movieTrailer = document.createElement('iframe');
+    movieTrailer.src = item[0].movieTrailer;
+    movieTrailer.setAttribute('allowFullScreen', '');
+
+    movieSummary.appendChild(movieTrailer);
   },
 
   renderOnPageLoadOrURLChange: () => {
-    const currentPath = location.hash.substring(1).replaceAll('%20', '-').replaceAll(':', '');
-    const tempArray = [movies.map((movie) => {
-      const element = movie.movieName.replaceAll(' ', '-').replaceAll(':', '');
+    const currentPath = location.hash.substring(1).replaceAll('%20', '-');
+    const tempArray = [...movies.map((movie) => {
+      const element = movie.movieName.replaceAll(' ', '-');
       return element;
     })];
-    for (let i = 0; i < tempArray.length - 1; i++) {
+    for (let i = 0; i <= tempArray.length - 1; i++) {
       if (currentPath === tempArray[i]) {
-        module.renderSpecificItem(tempArray[i], `${temp}`);
+        const movieInfo = movies.filter(function(el) {
+          return el.movieName === currentPath.replaceAll('-', ' ');
+        });
+        console.log(movieInfo);
+        module.renderSpecificItem(movieInfo);
       }
     }
   },
@@ -180,6 +285,10 @@ const module = {
 window.addEventListener('popstate', () => {
   module.renderOnPageLoadOrURLChange();
 });
+
+
+// using closures for data
+
 
 // allows user to like as many times as they would like
 function handleThumbUpClick(movieToUpdate) {
