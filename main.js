@@ -34,7 +34,8 @@ const movies = [
     movieName: 'Parasite',
     movieRating: 'R',
     movieYear: 2019,
-    movieDesc: `Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.`,
+    movieDesc: `Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan. 
+                Be it chance or fate, these two houses are brought together and the Kims sense a golden opportunity.`,
     movieGenre: 'Comedy/Mystery & thriller',
     movieDuration: '2h 12m',
     movieThumbsDown: 0,
@@ -103,7 +104,7 @@ logo.setAttribute('id', 'logo');
 logo.src = 'images/icon.png';
 
 const websiteTitle = document.createElement('h2');
-websiteTitle.setAttribute('id', 'movieTitle');
+websiteTitle.setAttribute('id', 'logoTitle');
 websiteTitle.textContent = 'Movie Critics';
 
 root.appendChild(navbar);
@@ -156,6 +157,8 @@ function initRender() {
 }
 initRender();
 
+// if user goes back, hash url will change so we need to render the initpage again
+
 function routeChange() {
   const hash = window.location.hash;
   if (hash === '') {
@@ -164,16 +167,19 @@ function routeChange() {
     routerView.appendChild(moviesList);
   }
 }
+
+// if refreshed on a specific movie's page, keep the contents
 window.addEventListener('hashchange', routeChange);
 window.onload = () => {
   module.renderOnPageLoadOrURLChange();
 };
+
+// hash URL
 document.querySelectorAll('.movies').forEach((movie) => {
   movie.addEventListener('click', function(e) {
     location.href = location.origin + location.pathname + '#' + e.target.alt.replaceAll(' ', '-');
   });
 });
-
 
 document.querySelectorAll('.thumbUp').forEach((thumb) => {
   thumb.addEventListener('click', function(e) {
@@ -190,7 +196,15 @@ document.querySelectorAll('.thumbDown').forEach((thumb) => {
   });
 });
 
+// if clicked on logo then go back to main page and change hash URL
+document.getElementById('logo').addEventListener('click', (e) => {
+  const movieInfoContainer = document.querySelector('.movieInfoContainer');
+  movieInfoContainer !== null ? root.appendChild(moviesList) : null;
+  location.hash = '';
+});
+
 const module = {
+  // renders item that was returned from temp array in other function
   renderSpecificItem: (item) => {
     const moviesList = document.querySelector('.moviesList');
     moviesList.remove();
@@ -247,7 +261,7 @@ const module = {
     const movieSummary = document.createElement('div');
     movieSummary.classList.add('movieSummary');
 
-    movieAdditional.appendChild(movieSummary);
+    movieInfoContainer.appendChild(movieSummary);
 
     const movieGenre = document.createElement('h2');
     movieGenre.textContent = item[0].movieGenre;
@@ -261,16 +275,18 @@ const module = {
 
     const iframeContainer = document.createElement('div');
     iframeContainer.classList.add('iframeContainer');
-    movieInfoContainer.appendChild(iframeContainer);
+    movieSummary.appendChild(iframeContainer);
 
 
     const movieTrailer = document.createElement('iframe');
     movieTrailer.src = item[0].movieTrailer;
+    movieTrailer.classList.add('movieTrailer');
     movieTrailer.setAttribute('allowFullScreen', '');
 
     iframeContainer.appendChild(movieTrailer);
   },
 
+  // javascript helper function to determine what to display on page
   renderOnPageLoadOrURLChange: () => {
     const currentPath = location.hash.substring(1).replaceAll('%20', '-');
     const tempArray = [...movies.map((movie) => {

@@ -1,13 +1,22 @@
+@font-face {
+    font-family: 'kenyan_coffeeregular';
+    src: url('fonts/kenyc-webfont.woff2') format('woff2'),
+        url('fonts/kenyc-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'kenyan_coffeeregular', Arial, Helvetica, sans-serif;
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    flex: 1 1 0;
     height: 100%;
     width: 100%;
 }
@@ -18,6 +27,12 @@
     cursor: pointer;
 }
 
+.card > p {
+    text-align: center;
+    padding: 0.7em;
+    font-size: 1.5em;
+}
+
 .card {
     display: flex;
     flex-direction: column;
@@ -25,15 +40,15 @@
     align-items: center;
     padding: 1em;
     border-radius: 12px;
-    color: white;
+    color: #e2e8f0;
     background-color: rgb(26, 26, 26)
 }
 
 html,
 body {
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
 }
 
 .thumbs {
@@ -46,6 +61,8 @@ body {
     grid-template-rows: .1fr .1fr .1fr;
     height: 100%;
     background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(3, 84, 142, 1) 100%);
+    gap: 32px;
+    font-size: 24px;
 }
 
 .movieInfo {
@@ -54,7 +71,8 @@ body {
     height: 100%;
     justify-content: center;
     align-items: center;
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
+    padding: 1em;
 }
 
 .moviesData {
@@ -69,8 +87,8 @@ body {
     grid-template-columns: .1fr .1fr .1fr;
     justify-content: center;
     align-items: center;
-    gap: 32px;
     height: 100%;
+    gap: 32px;
     background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(3, 84, 142, 1) 100%);
 }
 
@@ -84,7 +102,6 @@ body {
     justify-content: flex-start;
     align-items: center;
     background-color: #171c20;
-    color: white;
     width: 100%;
 }
 
@@ -94,51 +111,137 @@ body {
 }
 
 #movieTitle {
-    color: white;
+    color: #e2e8f0;
+    font-size: 2em;
 }
 
-li {
-    color: white;
+#logoTitle {
+    color: #e2e8f0;
+    font-size: 3em;
 }
-
 ul {
     display: flex;
     gap: 32px;
 }
 
+ul>li:nth-child(-n+3) {
+    white-space: nowrap;
+}
+
+ul>li:nth-child(-n+1),
+ul>li:nth-child(n+4) {
+    list-style-type: none;
+}
+
 .renderedMovieImage {
     width: 450px;
+    margin-left: 1.5em;
 }
 
 .movieAdditional {
     display: grid;
-    grid-column: 1 / span 2;
-    grid-template-columns: .1fr 1fr;
+    grid-row: 2;
     gap: 32px;
 
 }
 
-.movieSummary {
-    color: white;
-    font-size: 15px;
+li {
+    color: #e2e8f0;
 }
 
+.movieSummary {
+    display: flex;
+    flex-direction: column;
+    color: #e2e8f0;
+    font-size: 20px;
+    gap: 16px;
+}
+
+.movieSummary > p {
+    font-size: 22px;
+}
+nav {
+    position: sticky;
+    top: 0;
+}
+.iframeMobileViewContainer {
+    visibility: hidden;
+}
 
 .iframeContainer {
-    position: relative;
-    bottom: 36em;
-    left: 33em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
+
 iframe {
-    height: 35em;
-    width: 70em;
+    height: 100%;
+    width: 100%;
 }
-@media only screen and (max-width: 414px) {
-    #root {
-        display: flex;
-        flex-direction: column;
+
+.thumbUp,
+.thumbDown {
+    width: 50px;
+    height: 50px;
+}
+
+.thumbDown:active,
+.thumbUp:active {
+    transform: scale3d(1.25, 1.25, 1.25);
+}
+
+@media only screen and (max-width: 896px) and (orientation: landscape) {
+
+    html,
+    body {
+        overflow-y: auto;
     }
 
+    .moviesList {
+        grid-template-columns: .1fr .1fr;
+        padding: 1em;
+        height: auto;
+    }
+
+    .movieInfoContainer {
+        height: fit-content;
+    }
+
+
+    .movieDetails {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .movieInfo {
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        grid-column: 1 / span 4;
+    }
+
+    .renderedMovieImage {
+        width: 250px;
+    }
+
+    .thumbUp,
+    .thumbDown {
+        height: 25px;
+        width: 25px;
+    }
+
+    .iframeContainer {
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+
+@media only screen and (max-width: 414px) {
     .movies {
         width: 125px;
         height: 125px;
@@ -147,7 +250,11 @@ iframe {
     .moviesList {
         display: grid;
         grid-template-columns: .1fr .1fr;
-        gap: 32px;
+        height: auto;
+    }
+
+    .movieInfoContainer {
+        gap: 16px;
     }
 
     .moviesData {
@@ -157,17 +264,20 @@ iframe {
         align-items: center;
     }
 
+    .movieSummary {
+        height: fit-content;
+    }
+
     .movieAdditional {
         display: flex;
-        gap: 32px;
+        gap: 16px;
+        height: fit-content;
     }
 
     .card>p {
         text-align: center;
         padding: 0.5em;
     }
-
-    .moviesData>p {}
 
     .card:hover {
         transform: scale(1.05);
@@ -181,31 +291,9 @@ iframe {
         resize: none;
         max-height: 90%;
         padding-top: 1.5em;
-
-        /* display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1em;
-        border-radius: 12px;
-        color: white;
-        background-color: rgb(26, 26, 26) */
     }
 
-    .iframeContainer {
-        position: static;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        grid-row: 3 / span 4;
-        grid-column: 1 / span 2;
-    }
 
-    iframe {
-        height: 90%;
-        width: 95%;
-
-    }
 
     .thumbDown:active,
     .thumbUp:active {
@@ -218,9 +306,15 @@ iframe {
         width: 25px;
     }
 
+    .iframeContainer {
+        position: relative;
+        right: 4em;
+    }
+
     .renderedMovieImage {
-        height: 240px;
+        height: 210px;
         width: 130px;
+        margin-left: 1em;
     }
 
     .movieDetails {
@@ -229,31 +323,14 @@ iframe {
         align-items: center;
     }
 
+
     .movieSummary {
-        width: 55%;
+        font-size: 18px;
+        height: fit-content;
+        grid-row-start: 2;
     }
 
-    #movieTitle {
-        padding: 1em;
-    }
-
-    .movieInfoContainer {
-        display: grid;
-        height: 100%;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(3, 84, 142, 1) 100%);
-        grid-template-rows: .1fr .1fr .1fr;
-    }
-
-    .movieInfo {
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    ul>li:nth-child(-n+3) {
-        white-space: nowrap;
-    }
-
-    ul>li:nth-child(n+4) {
-        list-style-type: none;
+    li {
+        font-size: 14px;
     }
 }
