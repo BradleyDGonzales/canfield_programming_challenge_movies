@@ -237,7 +237,7 @@ const module = {
 
     const movieAdditional = document.createElement('div');
     movieAdditional.classList.add('movieAdditional');
-    movieInfo.appendChild(movieAdditional);
+    movieInfoContainer.appendChild(movieAdditional);
 
     const movieImg = new Image();
     movieImg.src = item[0].movie;
@@ -256,13 +256,19 @@ const module = {
 
     const movieDesc = document.createElement('p');
     movieDesc.textContent = item[0].movieDesc;
-
     movieSummary.appendChild(movieDesc);
+
+
+    const iframeContainer = document.createElement('div');
+    iframeContainer.classList.add('iframeContainer');
+    movieInfoContainer.appendChild(iframeContainer);
+
+
     const movieTrailer = document.createElement('iframe');
     movieTrailer.src = item[0].movieTrailer;
     movieTrailer.setAttribute('allowFullScreen', '');
 
-    movieSummary.appendChild(movieTrailer);
+    iframeContainer.appendChild(movieTrailer);
   },
 
   renderOnPageLoadOrURLChange: () => {
