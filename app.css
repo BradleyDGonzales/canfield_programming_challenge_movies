@@ -209,7 +209,7 @@ iframe {
 
     .thumbDown:active,
     .thumbUp:active {
-        transform: scale(1.2);
+        transform: scale3d(1.25, 1.25, 1.25);
     }
 
     .thumbUp,
