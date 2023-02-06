@@ -282,6 +282,7 @@ const module = {
     movieTrailer.src = item[0].movieTrailer;
     movieTrailer.classList.add('movieTrailer');
     movieTrailer.setAttribute('allowFullScreen', '');
+    movieTrailer.setAttribute('target', '_blank');
 
     iframeContainer.appendChild(movieTrailer);
   },
@@ -308,7 +309,12 @@ window.addEventListener('popstate', () => {
   module.renderOnPageLoadOrURLChange();
 });
 
-
+// console.log(document.querySelector('.iframeContainer'));
+// // document.querySelectorAll('.movieTrailer').forEach((trailer) => {
+// //   trailer.addEventListener('click', function(e) {
+// //     console.log(e);
+// //   });
+// // });
 // using closures for data
 
 
