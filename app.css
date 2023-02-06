@@ -91,7 +91,6 @@ body {
     gap: 32px;
     background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(3, 84, 142, 1) 100%);
 }
-
 .movies {
     width: 250px;
     height: 250px;
@@ -190,6 +189,27 @@ iframe {
 .thumbDown:active,
 .thumbUp:active {
     transform: scale3d(1.25, 1.25, 1.25);
+}
+
+@media only screen and (max-width: 820px) {
+    .moviesList {
+        grid-template-columns: .1fr .1fr .1fr;
+        border: 2px solid blue;
+        height: 100%;
+        width: auto;
+    }
+    .movies {
+        height: 175px;
+        width: 175px;
+    }
+    .thumbDown,
+    .thumbUp {
+        width: 35px;
+        height: 35px;
+    }
+    .renderedMovieImage {
+        width: 250px;
+    }
 }
 
 @media only screen and (max-width: 896px) and (orientation: landscape) {
