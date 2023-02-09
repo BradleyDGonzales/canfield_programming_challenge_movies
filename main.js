@@ -1,4 +1,7 @@
 // movies following the form of a JSON Object
+
+console.log('test');
+
 const movies = [
   {
     movie: 'images/avatar_way_of_water.jpg',
