@@ -75,7 +75,7 @@ body {
     padding: 1em;
 }
 
-.moviesData {
+.moviesDataContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -276,7 +276,7 @@ iframe {
         gap: 16px;
     }
 
-    .moviesData {
+    .moviesDataContainer {
         display: flex;
         flex-direction: row;
         justify-content: center;
