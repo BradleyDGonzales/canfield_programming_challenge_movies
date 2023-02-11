@@ -25,8 +25,10 @@ function pageLoad() {
   // append logo and title to navbar
 
   navbar.appendChild(logo);
+
+  // go back to homepage when clicked on logo
   document.getElementById('logo').addEventListener('click', (e) => {
-    location.href = location.origin + location.pathname;
+    location.hash = '';
   });
   navbar.appendChild(websiteTitle);
 
@@ -38,7 +40,7 @@ function pageLoad() {
   root.appendChild(moviesList);
 
 
-  // eslint-disable-next-line no-var
+  // store data as JSON object, each element is a new class Movie
   const movies = [
     new Movie(
         {
@@ -160,6 +162,7 @@ function pageLoad() {
 
     return;
 
+    // function that renders out homepage cards (movie list)
     function renderMovieCard() {
       const card = document.createElement('div');
       card.classList.add('card');
@@ -180,19 +183,19 @@ function pageLoad() {
       card.appendChild(movieName);
       card.appendChild(movieDataContainer);
 
-      const thumbDown = new Image();
-      thumbDown.src = 'images/thumb-down-outline.svg';
-      thumbDown.classList.add('thumbDown');
-      thumbDown.setAttribute('data-movie', `${MovieParameters.movieTitle} Dislikes`);
-      movieDataContainer.appendChild(thumbDown);
-
       const thumbDownCount = document.createElement('p');
       thumbDownCount.textContent = MovieParameters.movieThumbsDown;
       movieDataContainer.appendChild(thumbDownCount);
 
+      const thumbDown = new Image();
+      thumbDown.src = 'images/thumb_down.png';
+      thumbDown.classList.add('thumbDown');
+      thumbDown.setAttribute('data-movie', `${MovieParameters.movieTitle} Dislikes`);
+      movieDataContainer.appendChild(thumbDown);
+
 
       const thumbUp = new Image();
-      thumbUp.src = 'images/thumb-up-outline.svg';
+      thumbUp.src = 'images/thumb_up.png';
       thumbUp.classList.add('thumbUp');
       thumbUp.setAttribute('data-movie', `${MovieParameters.movieTitle} Likes`);
       movieDataContainer.appendChild(thumbUp);
@@ -203,7 +206,11 @@ function pageLoad() {
     }
   }
 
+  // call the renderMovieCard function for every element in the movies array
   movies.map((data) => data.renderMovieCard());
+
+
+  // changes the url to a hash url containing the current clicked on movie's name
 
   document.querySelectorAll('.movies').forEach((movie) => {
     movie.addEventListener('click', function(e) {
@@ -211,14 +218,22 @@ function pageLoad() {
     });
   });
 
+  // onload, render the appropriate page based on hash
+  window.onload = () => {
+    renderOnPageLoadOrURLChange();
+  };
+
+  // if fragment identifier changes, then render the appropriate page based on the hash
   window.addEventListener('hashchange', () => {
     renderOnPageLoadOrURLChange();
   });
+
+  // if user refreshed page or navigates pushstate and popstate, then render the appropriate page based on the hash
   window.addEventListener('popstate', () => {
     renderOnPageLoadOrURLChange();
   });
 
-
+  // handles a movie's likes if clicked on
   document.querySelectorAll('.thumbUp').forEach((thumb) => {
     thumb.addEventListener('click', function() {
       const currentAttribute = thumb.getAttribute('data-movie');
@@ -226,6 +241,8 @@ function pageLoad() {
       handleThumbUpClick(currentAttribute);
     });
   });
+
+  // handles a movie's dislikes if clicked on
   document.querySelectorAll('.thumbDown').forEach((thumb) => {
     thumb.addEventListener('click', function() {
       const currentAttribute = thumb.getAttribute('data-movie');
@@ -233,6 +250,7 @@ function pageLoad() {
       handleThumbDownClick(currentAttribute);
     });
   });
+
   function handleThumbUpClick(movieToUpdate) {
     let thumbUpCount = 0;
     movies.map((movie) => {
@@ -251,6 +269,7 @@ function pageLoad() {
     };
     return updateLikesData(thumbUpCount);
   }
+
   function handleThumbDownClick(movieToUpdate) {
     let thumbDownCount = 0;
     movies.some((movie) => {
@@ -265,14 +284,19 @@ function pageLoad() {
           movie.movieThumbsDown = thumbDownCount;
         }
       });
-      document.querySelector(`[data-movie="${movieToUpdate}"]`).nextElementSibling.textContent = thumbDownCount;
+      document.querySelector(`[data-movie="${movieToUpdate}"]`).previousElementSibling.textContent = thumbDownCount;
       console.log(movies);
     };
     return updateDislikesData(thumbDownCount);
   }
+
+  // handles the appropriate render based off url, specifically the current location.hash
   function renderOnPageLoadOrURLChange() {
     let movieInfo;
     const currentPath = location.hash.substring(1).replaceAll('%20', '-');
+
+    // we need to check if when a user navigates back instead of refreshing, otherwise nothing will happen
+    // when renderSpecificItem() gets called because movieInfo will be undefined if currentPath is empty
     if (currentPath === '') {
       const movieInfoContainer = document.querySelector('.movieInfoContainer');
       movieInfoContainer ? (movieInfoContainer.remove(), root.appendChild(moviesList)) : null;
@@ -282,12 +306,13 @@ function pageLoad() {
         const element = movie.movieTitle.replaceAll(' ', '-');
         return element;
       })];
+
+      // movieInfo will contain information only about the user's clicked movie. this information is grabbed from our movies array
       for (let i = 0; i <= tempArray.length - 1; i++) {
         if (currentPath === tempArray[i]) {
           movieInfo = movies.filter(function(el) {
             return el.movieTitle === currentPath.replaceAll('-', ' ');
           });
-          console.log(movieInfo);
         }
       }
     }
@@ -374,8 +399,5 @@ function pageLoad() {
     }
     return renderSpecificItem(movieInfo);
   }
-  window.onload = () => {
-    renderOnPageLoadOrURLChange();
-  };
 }
 pageLoad();
