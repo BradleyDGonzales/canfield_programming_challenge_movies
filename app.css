@@ -205,6 +205,9 @@ iframe {
         height: 175px;
         width: 175px;
     }
+    .moviesDataContainer > p {
+        font-size: 22px;
+    }
     .thumbDown,
     .thumbUp {
         width: 35px;
@@ -285,6 +288,9 @@ iframe {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+    }
+    .moviesDataContainer > p {
+        font-size: 19px;
     }
 
     .movieSummary {
